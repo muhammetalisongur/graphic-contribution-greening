@@ -35,6 +35,24 @@ function getTargetDate(year, weekNumber, dayOfWeek) {
     .add(dayOfWeek, 'days');
 }
 
+function isValidCommitDate(targetDate) {
+  const now = moment();
+  const isCurrentYear = targetDate.year() === now.year();
+
+  // If current year, check if date is not in the future
+  if (isCurrentYear) {
+    return targetDate.isSameOrBefore(now, 'day');
+  }
+
+  // If past year, always valid
+  if (targetDate.year() < now.year()) {
+    return true;
+  }
+
+  // If future year, never valid
+  return false;
+}
+
 async function writeData(data) {
   return new Promise((resolve, reject) => {
     jsonfile.writeFile(DATA_FILE, data, (error) => {
@@ -121,9 +139,18 @@ async function generateContributions() {
 
   let currentWeek = null;
 
+  let skippedCount = 0;
+
   for (let i = 0; i < expandedPatterns.length; i++) {
     const pattern = expandedPatterns[i];
     const targetDate = getTargetDate(YEAR, pattern.week, pattern.day);
+
+    // Check if date is valid (not in future)
+    if (!isValidCommitDate(targetDate)) {
+      console.log(`[${i + 1}/${expandedPatterns.length}] Skipping future date: ${targetDate.format('YYYY-MM-DD')} (Week ${pattern.week}, Day ${pattern.day})`);
+      skippedCount++;
+      continue;
+    }
 
     console.log(`[${i + 1}/${expandedPatterns.length}] Processing week ${pattern.week}, day ${pattern.day}`);
 
@@ -134,6 +161,10 @@ async function generateContributions() {
       console.log("");
     }
     currentWeek = pattern.week;
+  }
+
+  if (skippedCount > 0) {
+    console.log(`\nSkipped ${skippedCount} future dates.`);
   }
 
   console.log("Pushing to remote...");
