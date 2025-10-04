@@ -5,13 +5,21 @@ import simpleGit from "simple-git";
 const DATA_FILE = "./contribution-tracker.json";
 
 const YEAR = 2025;
-// Contribution patterns: week number (1-52), day of week (0=Sunday, 1=Monday...6=Saturday), commit count
+/**
+ * Contribution patterns configuration:
+ *
+ * week: 1-52 (specific week) or "all" (all weeks)
+ * day: 0-6 (0=Sunday...6=Saturday) or "all" (all days)
+ * commits: Number of commits to create
+ *
+ * Examples:
+ * { week: "all", day: "all", commits: 1 }  → Every day of the year, 1 commit
+ * { week: "all", day: 1, commits: 2 }      → Every Monday, 2 commits
+ * { week: 5, day: "all", commits: 1 }      → Week 5 all days, 1 commit each
+ * { week: 10, day: 3, commits: 5 }         → Week 10 Wednesday, 5 commits
+ */
 const patterns = [
-  { week: 1, day: 0, commits: 3 }, // Week 1, Sunday, 3 commits
-  { week: 1, day: 2, commits: 2 }, // Week 1, Tuesday, 2 commits
-  { week: 2, day: 0, commits: 1 }, // Week 2, Sunday, 1 commit
-  { week: 2, day: 5, commits: 4 }, // Week 2, Friday, 4 commits
-  { week: 3, day: 2, commits: 2 }  // Week 3, Tuesday, 2 commits
+  { week: 5, day: "all", commits: 1 },
 ];
 
 function getTargetDate(year, weekNumber, dayOfWeek) {
@@ -63,17 +71,69 @@ async function makeCommits(targetDate, count, week, day) {
   }
 }
 
+function expandPatterns(patterns) {
+  const expandedPatterns = [];
+
+  for (const pattern of patterns) {
+    if (pattern.week === "all" && pattern.day === "all") {
+      // Generate patterns for all weeks and all days
+      for (let week = 1; week <= 52; week++) {
+        for (let day = 0; day <= 6; day++) {
+          expandedPatterns.push({
+            week: week,
+            day: day,
+            commits: pattern.commits
+          });
+        }
+      }
+    } else if (pattern.week === "all") {
+      // Generate patterns for all weeks, specific day
+      for (let week = 1; week <= 52; week++) {
+        expandedPatterns.push({
+          week: week,
+          day: pattern.day,
+          commits: pattern.commits
+        });
+      }
+    } else if (pattern.day === "all") {
+      // Generate patterns for specific week, all days
+      for (let day = 0; day <= 6; day++) {
+        expandedPatterns.push({
+          week: pattern.week,
+          day: day,
+          commits: pattern.commits
+        });
+      }
+    } else {
+      // Add normal pattern as-is
+      expandedPatterns.push(pattern);
+    }
+  }
+
+  return expandedPatterns;
+}
+
 async function generateContributions() {
   const git = simpleGit();
+  const expandedPatterns = expandPatterns(patterns);
 
-  for (let i = 0; i < patterns.length; i++) {
-    const pattern = patterns[i];
+  console.log(`Total patterns to process: ${expandedPatterns.length}`);
+
+  let currentWeek = null;
+
+  for (let i = 0; i < expandedPatterns.length; i++) {
+    const pattern = expandedPatterns[i];
     const targetDate = getTargetDate(YEAR, pattern.week, pattern.day);
 
-    console.log(`[${i + 1}/${patterns.length}] Processing week ${pattern.week}, day ${pattern.day}`);
+    console.log(`[${i + 1}/${expandedPatterns.length}] Processing week ${pattern.week}, day ${pattern.day}`);
 
     await makeCommits(targetDate, pattern.commits, pattern.week, pattern.day);
-    console.log("");
+
+    // Add line break when week changes for better readability
+    if (currentWeek !== null && currentWeek !== pattern.week) {
+      console.log("");
+    }
+    currentWeek = pattern.week;
   }
 
   console.log("Pushing to remote...");
