@@ -1,0 +1,26 @@
+{
+  "name": "graphic-contribution-greening",
+  "version": "1.0.0",
+  "description": "I have a dream",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/muhammetalisongur/graphic-contribution-greening.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/muhammetalisongur/graphic-contribution-greening/issues"
+  },
+  "homepage": "https://github.com/muhammetalisongur/graphic-contribution-greening#readme",
+  "dependencies": {
+    "jsonfile": "^6.2.0",
+    "moment": "^2.30.1",
+    "simple-git": "^3.28.0"
+  }
+}
