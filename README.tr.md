@@ -2,6 +2,17 @@
 
 GitHub contribution graph'ınıza yazı, şekil ve desenler ekleyen interaktif CLI aracı.
 
+## 📸 Ekran Görüntüleri
+
+### Metin Pattern'i
+![Metin Pattern Örneği](Images/Text.png)
+
+### Kalp Şekli
+![Kalp Şekli Örneği](Images/Heart.png)
+
+### Dalga Efekti
+![Dalga Efekti Örneği](Images/Wave.png)
+
 ## 🚀 Özellikler
 
 ### İnteraktif CLI Modu
@@ -21,9 +32,16 @@ GitHub contribution graph'ınıza yazı, şekil ve desenler ekleyen interaktif C
 
 ## 📦 Kurulum
 
+### ⚠️ Önemli: Önce Fork Yapın!
+
+**Bu repoyu kendi GitHub hesabınıza fork etmelisiniz** çünkü araç, contribution graph'ınızda pattern oluşturmak için kendi repo'nuza commit atar.
+
+1. **Repoyu fork edin**: Bu sayfanın sağ üstündeki "Fork" butonuna tıklayın
+2. **Fork'unuzu klonlayın**:
+
 ```bash
-# Repoyu klonla
-git clone https://github.com/muhammetalisongur/graphic-contribution-greening.git
+# KENDİ fork'ladığınız repoyu klonlayın (YOUR_USERNAME'i değiştirin)
+git clone https://github.com/YOUR_USERNAME/graphic-contribution-greening.git
 cd graphic-contribution-greening
 
 # Bağımlılıkları yükle
@@ -124,32 +142,66 @@ Hafta ve gün bazında özel commit sayıları belirleme
 ## 🔍 GitHub Profil Analizi
 
 Analiz özellikleri:
-- Toplam contribution sayısı
-- Boş/dolu gün oranı
-- En yoğun gün tespiti
-- Aylık trend analizi
-- Boş alan önerileri
+- **Toplam contribution sayısı** - Yıllık toplam aktivite
+- **Aktif/boş gün oranı** - Commit'li günlerin yüzdesi
+- **En yoğun gün tespiti** - En fazla contribution'a sahip gün
+- **Streak takibi** - Mevcut, maksimum ve en uzun boş streak'ler
+- **Gün dağılımı** - Haftanın günlerine göre contribution dağılımı (Paz-Cmt)
+- **Aylık trend analizi** - Bar grafikli aylık contribution dökümü
+- **Boş alan tespiti** - Ardışık boş haftaları belirler (min 3 hafta)
+- **Akıllı metin yerleştirme önerileri** - Metin uzunluğuna göre optimal haftalar önerir
+- **Pattern yerleştirme önerileri** - Şekil ve efektler için optimal haftalar önerir
+- **Doluluk oranı hesaplama** - Graph yoğunluğunu yüzde olarak ölçer
+- **Yıl karşılaştırma** - Mevcut yılı önceki yıl istatistikleriyle karşılaştırır
+- **Aktif yıl tespiti** - Hesap oluşturma yılını otomatik tespit eder ve doğrular
+- **Hesap oluşturma doğrulaması** - GitHub hesabınızdan önce commit oluşturmayı engeller
 
 ## 💾 Pattern Yönetimi
 
 Pattern'lerinizi kaydedin ve tekrar kullanın:
-- Kaydetme: Pattern oluşturduktan sonra "💾 Kaydet" seçeneği
-- Yükleme: Ana menüden "📂 Kayıtlı Pattern Yükle"
-- Silme: Ayarlardan tüm pattern'leri temizleme
+- **Kaydetme**: Pattern oluşturduktan sonra "💾 Kaydet" seçip isim verin
+- **Yükleme**: Ana menüden "📂 Kayıtlı Pattern Yükle"
+- **Silme**: Ayarlardan tüm pattern'leri temizleme
+- **Metadata**: Her kaydedilen pattern istatistikler içerir (toplam commit, gün sayısı, hafta aralığı, oluşturma tarihi)
 
 ## 🛠️ Gelişmiş Özellikler
 
-### Gradient Efekti
-Pattern'e kademeli yoğunluk ekler
+### Çok Satırlı Metin Desteği
+Ayarlanabilir satır aralığı ile birden fazla satırda metin yazabilirsiniz.
 
-### Alternating Efekti
-Ardışık commit'lerde farklı yoğunluklar
+### Akıllı Metin Yerleştirme
+- Contribution graph'ınızdaki boş alanları otomatik analiz eder
+- Metin uzunluğuna göre optimal haftalar önerir
+- Her karakter ~6 haftalık alan gerektirir
+- Metnin kesilmesini veya mevcut contribution'larla çakışmasını önler
 
-### Shadow Efekti
-Pattern'e gölge ekler
+### Pattern Doğrulama
+Tüm pattern'ler oluşturulmadan önce otomatik doğrulanır:
+- Hafta aralığı: 1-52 (veya artık yıllar için 1-53)
+- Gün aralığı: 0-6 (Pazar=0, Cumartesi=6)
+- Commit sayısı: 1-20 (fazlaysa uyarı verir)
+- Tarih doğrulama: Hesap oluşturmadan önce veya gelecekte commit engellenir
 
-### Multi-Pattern
-Birden fazla pattern'i birleştirme
+### Gelecek Commit Tespiti
+- Pattern'deki gelecek tarihleri otomatik tespit eder
+- Push öncesi uyarı gösterir
+- Önizlemede gelecek commit'leri özel işaretleyicilerle gösterir (⏰ veya F)
+- Push sırasında gelecek commit'leri atlar
+
+### Manuel Pattern - "Tüm Hafta" Seçeneği
+Manuel pattern oluştururken "All week" seçeneği ile pattern'i aynı anda 7 güne uygulayabilirsiniz.
+
+### Efekt Parametreleri
+Efektleri gelişmiş parametrelerle özelleştirin:
+- **Wave**: `amplitude` (dalga yüksekliği), `wavelength` (dalga frekansı)
+- **Checkerboard**: `startWeek`, `endWeek` (aralık kontrolü)
+- **Spiral**: `startWeek` (başlangıç pozisyonu)
+- **Random**: `count` (rastgele commit sayısı)
+
+### Otomatik Yapılandırma
+- İlk çalıştırmada şablon `.env` dosyasını otomatik oluşturur
+- Git remote URL'den GitHub kullanıcı adını tespit eder
+- Hesap oluşturma tarihine göre akıllı yıl önerileri
 
 ## 📊 Visualizer Modları
 

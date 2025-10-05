@@ -8,6 +8,17 @@ An interactive CLI tool for creating artistic patterns, text, and shapes on your
 
 > **[Türkçe README için tıklayın](README.tr.md)**
 
+## 📸 Screenshots
+
+### Text Pattern
+![Text Pattern Example](Images/Text.png)
+
+### Heart Shape
+![Heart Shape Example](Images/Heart.png)
+
+### Wave Effect
+![Wave Effect Example](Images/Wave.png)
+
 ## ✨ Features
 
 ### Interactive CLI Mode
@@ -28,9 +39,16 @@ An interactive CLI tool for creating artistic patterns, text, and shapes on your
 
 ## 📦 Installation
 
+### ⚠️ Important: Fork First!
+
+**You must fork this repository to your own GitHub account** because the tool creates commits in your repository to generate patterns on your contribution graph.
+
+1. **Fork the repository**: Click the "Fork" button at the top-right of this page
+2. **Clone your fork**:
+
 ```bash
-# Clone the repository
-git clone https://github.com/muhammetalisongur/graphic-contribution-greening.git
+# Clone YOUR forked repository (replace YOUR_USERNAME)
+git clone https://github.com/YOUR_USERNAME/graphic-contribution-greening.git
 cd graphic-contribution-greening
 
 # Install dependencies
@@ -132,33 +150,66 @@ Specify exact week, day, and commit count for precise control.
 ## 🔍 GitHub Profile Analysis
 
 Analysis features:
-- Total contribution count
-- Active/empty day ratio
-- Busiest day detection
-- Monthly trend analysis
-- Empty space suggestions
-- Pattern placement recommendations
+- **Total contribution count** - Overall yearly activity
+- **Active/empty day ratio** - Percentage of days with commits
+- **Busiest day detection** - Day with most contributions
+- **Streak tracking** - Current, max, and longest empty streaks
+- **Day distribution** - Contribution patterns by day of week (Sun-Sat)
+- **Monthly trend analysis** - Monthly contribution breakdown with bar charts
+- **Empty space detection** - Identifies consecutive weeks with no activity (min 3 weeks)
+- **Smart text placement suggestions** - Analyzes empty spaces and suggests optimal weeks for your text based on length
+- **Pattern placement recommendations** - Recommends optimal weeks for shapes and effects
+- **Fill rate calculation** - Measures graph density as percentage
+- **Year comparison** - Compare current year with previous year's statistics
+- **Active years detection** - Automatically detects your account creation year and validates year selection
+- **Account creation validation** - Prevents creating commits before your GitHub account existed
 
 ## 💾 Pattern Management
 
 Save and reuse your patterns:
-- **Save**: After creating a pattern, choose "💾 Save"
+- **Save**: After creating a pattern, choose "💾 Save" and give it a name
 - **Load**: From main menu, select "📂 Load Saved Pattern"
 - **Clear**: In settings, clear all saved patterns
+- **Metadata**: Each saved pattern includes statistics (total commits, total days, week range, creation date)
 
 ## 🛠️ Advanced Features
 
-### Gradient Effect
-Applies gradual intensity increase across the pattern.
+### Multi-line Text Support
+Write text across multiple rows with configurable line spacing.
 
-### Alternating Effect
-Alternates between high and low intensity commits.
+### Smart Text Placement
+- Automatically analyzes empty spaces in your contribution graph
+- Suggests optimal weeks to place your text based on text length
+- Each character requires ~6 weeks of space
+- Prevents text from being cut off or overlapping existing contributions
 
-### Shadow Effect
-Adds a shadow effect to patterns for depth.
+### Pattern Validation
+All patterns are automatically validated before creation:
+- Week range: 1-52 (or 1-53 for leap years)
+- Day range: 0-6 (Sunday=0, Saturday=6)
+- Commit count: 1-20 (warns if excessive)
+- Date validation: Prevents commits before account creation or in the future
 
-### Multi-Pattern
-Combine multiple patterns into one.
+### Future Commit Detection
+- Automatically detects future dates in patterns
+- Shows warning before pushing
+- Displays future commits with special markers in preview (⏰ or F)
+- Skips future commits during push to prevent errors
+
+### Manual Pattern - "All Week" Keyword
+When creating manual patterns, you can use "All week" option to apply the pattern to all 7 days at once.
+
+### Effect Parameters
+Customize effects with advanced parameters:
+- **Wave**: `amplitude` (wave height), `wavelength` (wave frequency)
+- **Checkerboard**: `startWeek`, `endWeek` (range control)
+- **Spiral**: `startWeek` (starting position)
+- **Random**: `count` (number of random commits)
+
+### Automatic Configuration
+- Auto-creates `.env` file with template on first run
+- Detects GitHub username from git remote URL
+- Smart year suggestions based on account creation date
 
 ## 📊 Visualization Modes
 
