@@ -1,26 +1,51 @@
 {
   "name": "graphic-contribution-greening",
-  "version": "1.0.0",
-  "description": "I have a dream",
+  "version": "2.0.0",
+  "displayName": "GitHub Contribution Graph Art CLI",
+  "description": "GitHub Contribution Graph Art CLI - Create patterns, text, and shapes on your GitHub contribution graph",
   "main": "index.js",
   "type": "module",
+  "bin": {
+    "contribution-art": "./bin/cli.js"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node bin/cli.js",
+    "dev": "node bin/cli.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/muhammetalisongur/graphic-contribution-greening.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "github",
+    "contribution",
+    "graph",
+    "art",
+    "cli",
+    "pattern",
+    "text",
+    "visualization",
+    "commit",
+    "automation"
+  ],
+  "author": "Muhammet Ali Songur",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/muhammetalisongur/graphic-contribution-greening/issues"
   },
   "homepage": "https://github.com/muhammetalisongur/graphic-contribution-greening#readme",
   "dependencies": {
+    "axios": "^1.12.2",
+    "chalk": "^5.6.2",
+    "dotenv": "^17.2.2",
+    "inquirer": "^12.9.6",
     "jsonfile": "^6.2.0",
     "moment": "^2.30.1",
+    "ora": "^9.0.0",
     "simple-git": "^3.28.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
   }
 }
